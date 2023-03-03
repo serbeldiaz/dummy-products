@@ -3,13 +3,3 @@
   overflow: hidden;
   background-image: url("./background.gif");
 }
-
-.home-page .product-list-container{
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  align-items: center;
-  margin: auto;
-  padding-bottom: 20px;
-}

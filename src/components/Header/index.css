@@ -10,7 +10,7 @@ body, html {
 }
 
 body{
-    zoom: 80%;
+    zoom: 110%;
 }
 
 body *{
@@ -42,14 +42,71 @@ body *{
     z-index: 100;
 }
 
-.header .pre-header .user-name-container{
+.header .pre-header .cart{
     cursor: pointer;
 }
 
-.header .pre-header .user-name-container img{
-    width: 20px;
+.header .pre-header .cart img{
+    width: 40px;
 }
 
 .header .white-space-in-header{
     min-height: 50px;
+}
+
+.header .pre-header .cart .opened-cart {
+    position: absolute;
+    right: 20px;
+    background: #FFFFFF;
+    max-width: 350px;
+    width: 100%;
+    padding: 10px;
+    opacity: 0.9;
+    border-radius: 10px;
+}
+
+.header .pre-header .cart .opened-cart *{
+    color: #131313;
+    padding: 2px;
+}
+
+.header .pre-header .cart .opened-cart .item-in-minicart{
+    display: flex;
+    width: 100%;
+    padding: 10px;
+}
+
+.header .pre-header .cart .opened-cart .item-in-minicart .image img{
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin: auto;
+}
+
+.header .pre-header .cart .numbers {
+    font-size: 12px;
+    position: absolute;
+    right: 15px;
+    top: 5px;
+    background: #FFFFFF;
+    color: #131313;
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    border-radius: 20px;
+}
+
+.header .pre-header .cart .close {
+    position: absolute;
+    right: 15px;
+    font-size: 15px;
+    background: red;
+    color: white;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    border-radius: 20px;
+    cursor: pointer;
+    line-height: 12px;
+    border: none;
 }
