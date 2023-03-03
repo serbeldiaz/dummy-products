@@ -1,8 +1,9 @@
 # Dummy products project
-## Available Scripts
 
 Screenshot
 <img src="https://raw.githubusercontent.com/serbeldiaz/dummyproducts/master/screenshot.png" alt='Repository created by Sergio Beleño'/>
+
+## Available Scripts
 
 In the project directory, you can run:
 
