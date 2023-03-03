@@ -1,0 +1,27 @@
+.error .container .content.centered{
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.error{
+    min-height: 400px;
+    background-image: url("../Home/background.gif");
+}
+
+.error .container {
+    max-width: 750px;
+    margin: auto;
+}
+
+.error .container .content.centered h1{
+    font-size: 24px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.error .container .content.centered p{
+    font-size: 18px;
+    text-align: center;
+    color: #FFFFFF;
+}
