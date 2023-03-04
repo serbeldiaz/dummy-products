@@ -1,34 +1,17 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import { deleteItemInMinicart } from "../../actions";
 import './index.css';
 import Logo from './Logo.svg'
 import Carrito from './shopping-cart.png'
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
 
-function Header() {
-  const [itemsInCart, setItemsInCart] = useState([])
+function Header(props) {
 
-  setInterval(() => {
-    try {
-      if (itemsInCart !== JSON.parse(localStorage["cart-items"])) {
-        setItemsInCart(JSON.parse(localStorage["cart-items"]))
-      }
-    } catch (error) {
-      console.log(error.message)
-    }
-  }, 100);
+  const { miniCart } = props;
 
   const handleDeleteFromCart = (myId) => {
-    var items = JSON.parse(localStorage["cart-items"])
-
-    var filtered = items.filter(function (item) {
-      return item.id !== myId;
-    });
-
-    localStorage["cart-items"] = JSON.stringify(filtered)
-
-    setTimeout(() => {
-      window.location = "/"
-    }, 200);
+    props.deleteItemInMinicart(myId)
   }
 
   return (
@@ -45,34 +28,37 @@ function Header() {
           <div className='cart-logo'>
             <img src={Carrito} alt="Carrito" />
             <div className='numbers'>
-              {itemsInCart.length}
+              {miniCart.length}
             </div>
           </div>
           {
-            (itemsInCart.length) ? (
+            (miniCart.length >= 1) ? (
               <div className='opened-cart'>
-                {itemsInCart.map((item, index) => (
-                  <div className='item-in-minicart' key={index}>
-                    <div className='image'>
-                      <img src={item.images[0]} alt={item.title} />
-                    </div>
-                    <div className='content'>
-                      <div className='name'>
-                        {item.title}
+                {miniCart.map((item, index) => (
+                  (item.minicart !== undefined) && (
+                    <div className='item-in-minicart' key={index}>
+                      <div className='image'>
+                        {localStorage.setItem("cart-items", JSON.stringify(miniCart))}
+                        <img src={item.minicart.images[0]} alt={item.minicart.title} />
                       </div>
-                      <div className='name'>
-                        $ {item.price}
+                      <div className='content'>
+                        <div className='name'>
+                          {item.minicart.title}
+                        </div>
+                        <div className='name'>
+                          $ {item.minicart.price}
+                        </div>
                       </div>
+                      {
+                        <button className='close' onClick={() => { handleDeleteFromCart(item.minicart.id) }}>
+                          x
+                        </button>
+                      }
                     </div>
-                    {
-                      <button className='close' onClick={() => { handleDeleteFromCart(item.id) }}>
-                        x
-                      </button>
-                    }
-                  </div>
+                  )
                 ))}
               </div>
-            ):""
+            ) : ""
           }
         </div>
       </div>
@@ -82,4 +68,14 @@ function Header() {
   );
 }
 
-export default Header;
+const mapStateToProps = state => {
+  return {
+    miniCart: state.miniCart,
+  }
+}
+
+const mapDispatchToProps = {
+  deleteItemInMinicart
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

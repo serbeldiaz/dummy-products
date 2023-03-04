@@ -1,17 +1,15 @@
-import React, { useEffect, useState, useMemo} from "react";
+import React, { useEffect, useState, useMemo } from "react";
+import { connect } from 'react-redux';
+import { setItemInMiniCart } from "../../actions";
 import './index.css'
 
-const Products = () => {
+const Products = (props) => {
+
+    const { userID, miniCart } = props
 
     const [products, setProducts] = useState([]);
-    const [items, setItems] = useState([]);
+    const [items, setItems] = useState(miniCart);
     const [search, setSearch] = useState("");
-
-    useEffect(() => {
-        if (localStorage["cart-items"]) {
-            setItems(JSON.parse(localStorage["cart-items"]))
-        }
-    }, [])
 
     useEffect(() => {
 
@@ -29,20 +27,27 @@ const Products = () => {
                 })
         }
 
-        setTimeout(() => {
-            localStorage.setItem("cart-items", JSON.stringify(items))
-        }, 1000);
-    }, [items]);
+    }, []);
 
     const handleAddToCart = (items, id) => {
         setItems([...items, JSON.parse(localStorage["products"])[id]])
+
+        if (!localStorage["user-id"]) {
+            localStorage.setItem("user-id", userID)
+        }
+
+        let minicart = JSON.parse(localStorage["products"])[id]
+
+        props.setItemInMiniCart({
+            minicart
+        })
     }
 
     const handleSearch = (event) => {
         setSearch(event.target.value)
     }
-    
-    const filteredProducts = useMemo(() => 
+
+    const filteredProducts = useMemo(() =>
         products.filter((product) => {
             return product.title.toLowerCase().includes(search.toLocaleLowerCase());
         }),
@@ -61,6 +66,7 @@ const Products = () => {
                 {
                     filteredProducts.map((product, index) => (
                         <div className="product-item" id={product.id - 1} key={index}>
+                            {localStorage.setItem("cart-items", JSON.stringify(miniCart))}
                             <div className="image">
                                 <img src={product.images[0]} alt={product.title} />
                             </div>
@@ -76,4 +82,15 @@ const Products = () => {
     )
 }
 
-export default Products
+const mapStateToProps = (state, actions) => {
+    return {
+        userID: state.userID,
+        miniCart: state.miniCart
+    }
+}
+
+const mapDispatchToProps = {
+    setItemInMiniCart
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Products)
